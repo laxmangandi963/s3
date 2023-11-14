@@ -34,6 +34,30 @@ public class S3Util {
 		}
 	}
 
+	public String saveFile(MultipartFile file) {
+		String originalFilename = file.getOriginalFilename();
+		try {
+			File file1 = convertMultiPartToFile(file);
+			PutObjectResult putObjectResult = s3.putObject(bucketName, originalFilename, file1);
+			return putObjectResult.getContentMd5();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+
+	public String saveFile(MultipartFile file) {
+		String originalFilename = file.getOriginalFilename();
+		try {
+			File file1 = convertMultiPartToFile(file);
+			PutObjectResult putObjectResult = s3.putObject(bucketName, originalFilename, file1);
+			return putObjectResult.getContentMd5();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+
 	private File convertMultiPartToFile(MultipartFile file) throws IOException {
 		File convFile = new File(file.getOriginalFilename());
 		FileOutputStream fos = new FileOutputStream(convFile);
